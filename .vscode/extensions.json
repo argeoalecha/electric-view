@@ -1,0 +1,18 @@
+// .vscode/extensions.json (COMMIT this file)
+{
+  "recommendations": [
+    "ms-vscode.vscode-typescript-next",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-rename-tag",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-json",
+    "ms-vscode.git-graph",
+    "github.vscode-github-actions",
+    "supabase.supabase",
+    "ms-vscode.vscode-eslint",
+    "streetsidesoftware.code-spell-checker",
+    "ms-vscode.vscode-git-graph",
+    "donjayamanne.githistory",
+    "eamodio.gitlens"
+  ]
+}

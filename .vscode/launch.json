@@ -1,0 +1,22 @@
+// .vscode/launch.json (COMMIT this file)
+{
+  "version": "0.2.0",
+  "configurations": [
+    
+    
+    {
+      "name": "🐛 Debug Next.js",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "🌐 Launch Chrome against localhost",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src"
+    }
+  ]
+}
