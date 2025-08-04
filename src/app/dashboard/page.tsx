@@ -1,10 +1,10 @@
 'use client'
 
 import { useSupabase } from '@/providers/supabase-provider'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, memo, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, AreaChart, Area } from 'recharts'
 import HorizontalDashboard from '@/components/Layout/HorizontalDashboard'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, AreaChart, Area } from 'recharts'
 
 interface DashboardStats {
   totalLeads: number

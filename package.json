@@ -5,8 +5,11 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
+    "analyze": "npx webpack-bundle-analyzer .next/bundle-stats.json",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -44,6 +47,7 @@
     "jest": "^30.0.5",
     "jest-environment-jsdom": "^30.0.5",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }

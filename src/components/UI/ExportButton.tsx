@@ -1,12 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import jsPDF from 'jspdf'
-import autoTable from 'jspdf-autotable'
-import * as XLSX from 'xlsx'
+import { getExportFunction, type ExportFormat } from '@/utils/lazyExports'
 
 interface ExportOption {
-  format: 'pdf' | 'excel' | 'csv'
+  format: ExportFormat
   label: string
   icon: string
 }
