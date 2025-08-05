@@ -4,7 +4,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Users table (extends auth.users for MVP)
-CREATE TABLE public.profiles (
+CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID REFERENCES auth.users(id) PRIMARY KEY,
   email TEXT UNIQUE NOT NULL,
   full_name TEXT,
@@ -14,7 +14,7 @@ CREATE TABLE public.profiles (
 );
 
 -- Companies table (simplified for MVP)
-CREATE TABLE public.companies (
+CREATE TABLE IF NOT EXISTS public.companies (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   name TEXT NOT NULL,
   industry TEXT,
@@ -24,7 +24,7 @@ CREATE TABLE public.companies (
 );
 
 -- Contacts table (MVP essentials only)
-CREATE TABLE public.contacts (
+CREATE TABLE IF NOT EXISTS public.contacts (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   company_id UUID REFERENCES companies(id) ON DELETE SET NULL,
   first_name TEXT NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE public.contacts (
 );
 
 -- Deals table (simple pipeline for MVP)
-CREATE TABLE public.deals (
+CREATE TABLE IF NOT EXISTS public.deals (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   contact_id UUID REFERENCES contacts(id) ON DELETE CASCADE,
   company_id UUID REFERENCES companies(id) ON DELETE CASCADE,
@@ -51,7 +51,7 @@ CREATE TABLE public.deals (
 );
 
 -- Activities table (basic logging for MVP)
-CREATE TABLE public.activities (
+CREATE TABLE IF NOT EXISTS public.activities (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   deal_id UUID REFERENCES deals(id) ON DELETE CASCADE,
   contact_id UUID REFERENCES contacts(id) ON DELETE CASCADE,
@@ -62,9 +62,9 @@ CREATE TABLE public.activities (
 );
 
 -- Essential indexes for MVP
-CREATE INDEX idx_contacts_email ON contacts(email);
-CREATE INDEX idx_contacts_company ON contacts(company_id);
-CREATE INDEX idx_deals_contact ON deals(contact_id);
-CREATE INDEX idx_deals_stage ON deals(stage);
-CREATE INDEX idx_activities_deal ON activities(deal_id);
-CREATE INDEX idx_activities_date ON activities(activity_date);
+CREATE INDEX IF NOT EXISTS idx_contacts_email ON contacts(email);
+CREATE INDEX IF NOT EXISTS idx_contacts_company ON contacts(company_id);
+CREATE INDEX IF NOT EXISTS idx_deals_contact ON deals(contact_id);
+CREATE INDEX IF NOT EXISTS idx_deals_stage ON deals(stage);
+CREATE INDEX IF NOT EXISTS idx_activities_deal ON activities(deal_id);
+CREATE INDEX IF NOT EXISTS idx_activities_date ON activities(activity_date);
