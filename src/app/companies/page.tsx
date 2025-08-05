@@ -17,8 +17,8 @@ export default function CompaniesPage() {
   const [sortBy, setSortBy] = useState('name')
 
   // Get unique values for filters
-  const industries = [...new Set(companies.map(c => c.industry).filter(Boolean))]
-  const regions = [...new Set(companies.map(c => c.region).filter(Boolean))]
+  const industries = [...new Set(companies.map(c => c.industry).filter((industry): industry is string => Boolean(industry)))]
+  const regions = [...new Set(companies.map(c => c.region).filter((region): region is string => Boolean(region)))]
 
   // Filter and sort companies
   const handleFilterChange = () => {
