@@ -10,7 +10,7 @@ import {
   TeamIcon, 
   ProfileIcon 
 } from './NavigationIcons'
-import { getConfigStatus } from '@/lib/supabase-flexible'
+import { useSupabase } from '@/providers/supabase-provider'
 
 interface HorizontalDashboardProps {
   children: ReactNode
@@ -19,7 +19,7 @@ interface HorizontalDashboardProps {
 export default function HorizontalDashboard({ children }: HorizontalDashboardProps) {
   const router = useRouter()
   const pathname = usePathname()
-  const configStatus = getConfigStatus()
+  const { user, isDemo, loading } = useSupabase()
 
   const navigation = [
     {
@@ -64,6 +64,14 @@ export default function HorizontalDashboard({ children }: HorizontalDashboardPro
     router.push(href)
   }
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-teal-800 to-teal-900 flex items-center justify-center">
+        <div className="text-white text-lg">Loading...</div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-800 to-teal-900">
       {/* Top Header */}
@@ -78,7 +86,7 @@ export default function HorizontalDashboard({ children }: HorizontalDashboardPro
               <div>
                 <h1 className="text-xl font-bold text-gray-900">Philippine CRM</h1>
                 <p className="text-xs text-gray-500">
-                  {configStatus.isDemo ? 'Demo Mode' : 'Production Mode'}
+                  {isDemo ? 'Demo Mode' : 'Production Mode'}
                 </p>
               </div>
             </div>
@@ -86,14 +94,14 @@ export default function HorizontalDashboard({ children }: HorizontalDashboardPro
             {/* User Actions */}
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-600 hidden sm:inline">
-                Welcome, {configStatus.isDemo ? 'demo@democrm.ph' : 'user'}
+                Welcome, {user?.email || (isDemo ? 'demo@democrm.ph' : 'user')}
               </span>
-              {configStatus.isDemo && (
+              {isDemo && (
                 <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
                   Demo Mode
                 </span>
               )}
-              {!configStatus.isDemo && (
+              {!isDemo && (
                 <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
                   Live
                 </span>
