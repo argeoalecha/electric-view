@@ -81,7 +81,7 @@ export default function CompaniesPage() {
       large: 'bg-yellow-100 text-yellow-800',
       enterprise: 'bg-red-100 text-red-800'
     }
-    return colors[size]
+    return size ? colors[size] : 'bg-gray-100 text-gray-800'
   }
 
   const getStatusColor = (status: Company['status']) => {
