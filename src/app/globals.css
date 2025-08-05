@@ -114,30 +114,77 @@ body {
   animation: scaleIn 0.3s ease-out forwards;
 }
 
+/* ==================================================
+   PHILIPPINE CRM SPECIFIC STYLES
+   ================================================== */
+
 /* Smooth transitions for interactive elements */
 .transition-smooth {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-normal) var(--ease-out);
 }
 
-/* Philippine CRM specific styles */
+/* Glass morphism effect for modern UI */
 .glass-effect {
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--blur-amount));
   background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+@media (prefers-color-scheme: dark) {
+  .glass-effect {
+    background: rgba(15, 23, 42, 0.95);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+  }
+}
+
+/* Philippine CRM brand gradient */
 .teal-gradient {
-  background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+  background: linear-gradient(135deg, var(--teal-700) 0%, var(--teal-800) 100%);
 }
 
-/* Mobile optimizations for Philippine users */
+/* Card hover effects for interactive elements */
+.card-hover {
+  transition: all var(--transition-normal) var(--ease-out);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(13, 148, 136, 0.15);
+}
+
+/* Philippine peso currency styling */
+.peso-amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--teal-700);
+}
+
+/* ==================================================
+   MOBILE OPTIMIZATIONS FOR PHILIPPINE USERS
+   ================================================== */
 @media (max-width: 768px) {
   .mobile-touch-target {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: var(--touch-target-min);
+    min-width: var(--touch-target-min);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .mobile-text-size {
-    font-size: 16px; /* Prevents zoom on iOS */
+    font-size: var(--font-size-mobile); /* Prevents zoom on iOS */
+  }
+  
+  /* Improved mobile spacing */
+  .mobile-spacing {
+    padding: 1rem 0.75rem;
+  }
+  
+  /* Mobile-friendly form inputs */
+  .mobile-input {
+    font-size: var(--font-size-mobile);
+    padding: 0.75rem;
+    border-radius: 8px;
   }
 }
 
