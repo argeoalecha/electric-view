@@ -58,7 +58,7 @@ export default function SignUp() {
       const { error: signUpError } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/organization`
+          redirectTo: `${window.location.origin}/auth/callback`
         }
       })
 
@@ -85,7 +85,7 @@ export default function SignUp() {
       const { error: signUpError } = await supabase.auth.signInWithOAuth({
         provider: 'facebook',
         options: {
-          redirectTo: `${window.location.origin}/organization`
+          redirectTo: `${window.location.origin}/auth/callback`
         }
       })
 
