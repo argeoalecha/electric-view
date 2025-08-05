@@ -15,14 +15,14 @@
    - Name: "Philippine CRM"
    - Authorized redirect URIs:
      ```
-     https://qcqrpgmxwjudnkklvxjh.supabase.co/auth/v1/callback
+     https://tbgmweiszhsnsaarswvf.supabase.co/auth/v1/callback
      http://localhost:3000/auth/callback (for development)
      ```
 5. Copy Client ID and Client Secret
 
 ### 2. Supabase Configuration
 1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
-2. Select your project: qcqrpgmxwjudnkklvxjh
+2. Select your project: tbgmweiszhsnsaarswvf
 3. Go to "Authentication" > "Providers"
 4. Enable Google provider:
    - Toggle Google to "Enabled"
@@ -41,7 +41,7 @@
 4. Configure OAuth settings:
    - Valid OAuth Redirect URIs:
      ```
-     https://qcqrpgmxwjudnkklvxjh.supabase.co/auth/v1/callback
+     https://tbgmweiszhsnsaarswvf.supabase.co/auth/v1/callback
      http://localhost:3000/auth/callback (for development)
      ```
 5. Copy App ID and App Secret
@@ -68,9 +68,9 @@ NEXT_PUBLIC_AUTH_REDIRECT_URL=https://your-domain.com/dashboard
 ```
 
 ## Current Supabase Project Details
-- **Project URL**: https://qcqrpgmxwjudnkklvxjh.supabase.co
-- **Callback URL**: https://qcqrpgmxwjudnkklvxjh.supabase.co/auth/v1/callback
-- **Project ID**: qcqrpgmxwjudnkklvxjh
+- **Project URL**: https://tbgmweiszhsnsaarswvf.supabase.co
+- **Callback URL**: https://tbgmweiszhsnsaarswvf.supabase.co/auth/v1/callback
+- **Project ID**: tbgmweiszhsnsaarswvf
 
 ## Testing URLs
 - **Development**: http://localhost:3000
