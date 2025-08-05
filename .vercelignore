@@ -1,0 +1,40 @@
+# Dependencies
+node_modules
+
+# Testing
+coverage
+jest.config.js
+jest.setup.js
+src/**/__tests__
+src/**/*.test.ts
+src/**/*.test.tsx
+
+# Development files
+.env.local
+.env.development
+.env.test
+
+# Documentation
+*.md
+supabase-setup.md
+0804session.md
+
+# Database and setup files
+database-init.sql
+fix-rls-admin.js
+fix-rls-policies.sql
+run-migrations.js
+setup-database.js
+test-*.js
+
+# Scripts
+scripts/
+
+# IDE
+.vscode
+.DS_Store
+
+# Build artifacts
+.next
+out
+build
