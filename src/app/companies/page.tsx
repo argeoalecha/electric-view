@@ -95,13 +95,13 @@ export default function CompaniesPage() {
   }
 
   const getRelationshipColor = (strength: string) => {
-    const colors = {
+    const colors: Record<string, string> = {
       developing: 'text-yellow-600',
       good: 'text-blue-600',
       strong: 'text-green-600',
       excellent: 'text-emerald-600'
     }
-    return colors[strength]
+    return colors[strength] || 'text-gray-600'
   }
 
   const breadcrumbs = [
