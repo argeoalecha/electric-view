@@ -94,6 +94,14 @@ function createMockSupabaseClient() {
         }
       },
       signOut: async () => {
+        // Clear any stored session data for demo mode
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('demo_session')
+        }
+        // Trigger a page reload to reset the demo state
+        if (typeof window !== 'undefined') {
+          window.location.href = '/'
+        }
         return { error: null }
       },
       getSession: async () => {
