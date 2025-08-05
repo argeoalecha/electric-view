@@ -7,7 +7,24 @@ interface SupabaseConfig {
 
 // Get Supabase configuration from localStorage or environment
 function getSupabaseConfig(): SupabaseConfig | null {
-  // Try to get from localStorage first (user-provided config)
+  // Check if demo mode is forced (for development/testing)
+  const forceDemoMode = process.env.NEXT_PUBLIC_FORCE_DEMO_MODE === 'true'
+  if (forceDemoMode) {
+    return null
+  }
+
+  // Always prioritize environment variables in production
+  const envUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const envKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (envUrl && envKey && envUrl.includes('supabase.co') && envKey.startsWith('eyJ')) {
+    return {
+      url: envUrl,
+      anonKey: envKey
+    }
+  }
+
+  // Try to get from localStorage as fallback (user-provided config)
   if (typeof window !== 'undefined') {
     try {
       const storedConfig = localStorage.getItem('supabase_config')
@@ -19,17 +36,6 @@ function getSupabaseConfig(): SupabaseConfig | null {
       }
     } catch (error) {
       console.warn('Failed to parse stored Supabase config:', error)
-    }
-  }
-
-  // Fallback to environment variables
-  const envUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const envKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (envUrl && envKey && envUrl.includes('supabase.co') && envKey.startsWith('eyJ')) {
-    return {
-      url: envUrl,
-      anonKey: envKey
     }
   }
 
@@ -172,7 +178,29 @@ export function getConfigStatus(): {
   isDemo: boolean
   source: 'localStorage' | 'environment' | 'none'
 } {
-  // Check localStorage first
+  // Check if demo mode is forced
+  const forceDemoMode = process.env.NEXT_PUBLIC_FORCE_DEMO_MODE === 'true'
+  if (forceDemoMode) {
+    return {
+      hasConfig: false,
+      isDemo: true,
+      source: 'none'
+    }
+  }
+
+  // Check environment variables first (priority in production)
+  const envUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const envKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+
+  if (envUrl && envKey && envUrl.includes('supabase.co') && envKey.startsWith('eyJ')) {
+    return {
+      hasConfig: true,
+      isDemo: false,
+      source: 'environment'
+    }
+  }
+
+  // Check localStorage as fallback
   if (typeof window !== 'undefined') {
     try {
       const storedConfig = localStorage.getItem('supabase_config')
@@ -187,19 +215,7 @@ export function getConfigStatus(): {
         }
       }
     } catch (error) {
-      // Continue to environment check
-    }
-  }
-
-  // Check environment variables
-  const envUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const envKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (envUrl && envKey && envUrl.includes('supabase.co') && envKey.startsWith('eyJ')) {
-    return {
-      hasConfig: true,
-      isDemo: false,
-      source: 'environment'
+      // Continue to demo mode
     }
   }
 

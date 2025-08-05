@@ -10,6 +10,7 @@ import {
   TeamIcon, 
   ProfileIcon 
 } from './NavigationIcons'
+import { getConfigStatus } from '@/lib/supabase-flexible'
 
 interface HorizontalDashboardProps {
   children: ReactNode
@@ -18,6 +19,7 @@ interface HorizontalDashboardProps {
 export default function HorizontalDashboard({ children }: HorizontalDashboardProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const configStatus = getConfigStatus()
 
   const navigation = [
     {
@@ -75,16 +77,27 @@ export default function HorizontalDashboard({ children }: HorizontalDashboardPro
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">Philippine CRM</h1>
-                <p className="text-xs text-gray-500">Demo Mode</p>
+                <p className="text-xs text-gray-500">
+                  {configStatus.isDemo ? 'Demo Mode' : 'Production Mode'}
+                </p>
               </div>
             </div>
             
             {/* User Actions */}
             <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600 hidden sm:inline">Welcome, demo@democrm.ph</span>
-              <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
-                Demo Mode
+              <span className="text-sm text-gray-600 hidden sm:inline">
+                Welcome, {configStatus.isDemo ? 'demo@democrm.ph' : 'user'}
               </span>
+              {configStatus.isDemo && (
+                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
+                  Demo Mode
+                </span>
+              )}
+              {!configStatus.isDemo && (
+                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                  Live
+                </span>
+              )}
               <button 
                 onClick={() => router.push('/')}
                 className="text-sm text-red-600 hover:text-red-800 transition-colors"

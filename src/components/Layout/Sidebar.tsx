@@ -2,6 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation'
 import { useState } from 'react'
+import { getConfigStatus } from '@/lib/supabase-flexible'
 
 interface SidebarProps {
   isOpen: boolean
@@ -11,6 +12,7 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const router = useRouter()
   const pathname = usePathname()
+  const configStatus = getConfigStatus()
 
   const navigation = [
     {
@@ -87,7 +89,9 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               </div>
               <div className="ml-3">
                 <h1 className="text-white font-bold text-lg">Philippine CRM</h1>
-                <p className="text-teal-100 text-xs">Demo Mode</p>
+                <p className="text-teal-100 text-xs">
+                  {configStatus.isDemo ? 'Demo Mode' : 'Production Mode'}
+                </p>
               </div>
             </div>
             <button

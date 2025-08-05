@@ -12,6 +12,7 @@ import {
   TeamIcon, 
   ProfileIcon 
 } from './NavigationIcons'
+import { getConfigStatus } from '@/lib/supabase-flexible'
 
 interface DashboardLayoutProps {
   children: ReactNode
@@ -29,6 +30,7 @@ export default function DashboardLayout({
   actions 
 }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const configStatus = getConfigStatus()
   
   const navigation = [
     {
@@ -97,7 +99,9 @@ export default function DashboardLayout({
                   </div>
                   <div>
                     <h1 className="text-xl font-bold text-gray-900">Philippine CRM</h1>
-                    <p className="text-xs text-gray-500">Demo Mode</p>
+                    <p className="text-xs text-gray-500">
+                      {configStatus.isDemo ? 'Demo Mode' : 'Production Mode'}
+                    </p>
                   </div>
                 </div>
                 
