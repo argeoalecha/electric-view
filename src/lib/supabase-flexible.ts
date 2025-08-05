@@ -125,6 +125,10 @@ function createMockSupabaseClient() {
           data: [],
           error: null
         }),
+        order: (column: string, options?: any) => ({
+          data: [],
+          error: null
+        }),
         data: [],
         error: null
       }),

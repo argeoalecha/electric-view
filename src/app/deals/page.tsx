@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import DashboardLayout from '@/components/Layout/DashboardLayout'
 
 interface Deal {
@@ -183,7 +182,6 @@ const mockDeals: Deal[] = [
 const stageOrder = ['lead', 'qualified', 'proposal', 'negotiation', 'closed_won', 'closed_lost']
 
 export default function DealsPage() {
-  const router = useRouter()
   const [deals] = useState<Deal[]>(mockDeals)
   const [filteredDeals, setFilteredDeals] = useState<Deal[]>(mockDeals)
   const [viewMode, setViewMode] = useState<'pipeline' | 'table'>('pipeline')

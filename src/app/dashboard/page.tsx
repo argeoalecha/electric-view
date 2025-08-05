@@ -1,10 +1,10 @@
 'use client'
 
 import { useSupabase } from '@/providers/supabase-provider'
-import { useEffect, useState, memo, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import HorizontalDashboard from '@/components/Layout/HorizontalDashboard'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line, AreaChart, Area } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, AreaChart, Area } from 'recharts'
 
 interface DashboardStats {
   totalLeads: number
@@ -62,14 +62,13 @@ const culturalInsights = [
 const COLORS = ['#0891b2', '#06b6d4', '#22d3ee', '#67e8f9', '#a7f3d0', '#fde68a']
 
 export default function Dashboard() {
-  const { user, loading, supabase } = useSupabase()
+  const { user, loading } = useSupabase()
   const router = useRouter()
   
   // Demo mode - bypass authentication for testing
   const isDemoMode = true
-  const demoUser = { email: 'demo@democrm.ph', id: 'demo-user' }
   
-  const [stats, setStats] = useState<DashboardStats>({
+  const [stats] = useState<DashboardStats>({
     totalLeads: 15,
     totalDeals: 8,
     totalRevenue: 12750000,
@@ -89,16 +88,6 @@ export default function Dashboard() {
     }
   }, [user, loading, router, isDemoMode])
 
-  const handleSignOut = async () => {
-    if (isDemoMode) {
-      router.push('/')
-    } else {
-      await supabase.auth.signOut()
-      router.push('/')
-    }
-  }
-
-  const currentUser = isDemoMode ? demoUser : user
 
   if (!isDemoMode && loading) {
     return (

@@ -870,7 +870,7 @@ jest.mock('next/navigation', () => ({
           imports.push(specifier.local.name)
           importType = 'default'
         } else if (specifier.type === AST_NODE_TYPES.ImportSpecifier) {
-          imports.push(specifier.imported.name)
+          imports.push((specifier.imported as any).name)
         } else if (specifier.type === AST_NODE_TYPES.ImportNamespaceSpecifier) {
           imports.push(`* as ${specifier.local.name}`)
           importType = 'namespace'

@@ -107,7 +107,7 @@ export default function SignUp() {
       if (data.user) {
         router.push('/dashboard')
       }
-    } catch (err: any) {
+    } catch {
       setError('An unexpected error occurred. Please try again.')
     } finally {
       setLoading(false)

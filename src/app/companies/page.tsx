@@ -1,12 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import HorizontalDashboard from '@/components/Layout/HorizontalDashboard'
 import { useCompanies, Company } from '@/hooks/useSupabaseData'
 
 export default function CompaniesPage() {
-  const router = useRouter()
   const { companies, loading, error } = useCompanies()
   const [filteredCompanies, setFilteredCompanies] = useState<Company[]>([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -94,31 +92,6 @@ export default function CompaniesPage() {
     return colors[status]
   }
 
-  const getRelationshipColor = (strength: string) => {
-    const colors: Record<string, string> = {
-      developing: 'text-yellow-600',
-      good: 'text-blue-600',
-      strong: 'text-green-600',
-      excellent: 'text-emerald-600'
-    }
-    return colors[strength] || 'text-gray-600'
-  }
-
-  const breadcrumbs = [
-    { name: 'Dashboard', href: '/dashboard' },
-    { name: 'Companies Directory' }
-  ]
-
-  const headerActions = (
-    <div className="flex items-center space-x-3">
-      <span className="px-3 py-1 bg-teal-100 text-teal-800 text-sm rounded-full hidden sm:inline">
-        {filteredCompanies.length} companies
-      </span>
-      <button className="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors text-sm">
-        + Add New Company
-      </button>
-    </div>
-  )
 
   if (loading) {
     return (

@@ -103,7 +103,7 @@ export default function TeamManagement() {
         return
       }
 
-      const members = data.map(member => ({
+      const members = data.map((member: any) => ({
         id: member.id,
         email: member.users.email,
         full_name: member.full_name,
@@ -267,7 +267,7 @@ export default function TeamManagement() {
         <div className="flex justify-between items-center mb-6">
           <div>
             <h2 className="text-xl font-bold text-gray-900">Team Management</h2>
-            <p className="text-gray-600">Manage your organization's team members and their roles</p>
+            <p className="text-gray-600">Manage your organization&apos;s team members and their roles</p>
           </div>
           <button
             onClick={() => setShowInviteForm(!showInviteForm)}

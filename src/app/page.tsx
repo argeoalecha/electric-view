@@ -11,7 +11,7 @@ export default function Home() {
     const testConnection = async () => {
       try {
         // Test basic Supabase connection without table access
-        const { data, error } = await supabase.auth.getSession()
+        const { error } = await supabase.auth.getSession()
         if (error) {
           console.error('Supabase auth error:', error)
           setConnectionStatus('error')

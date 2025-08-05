@@ -2,6 +2,9 @@
 
 import { useState } from 'react'
 import { getExportFunction, type ExportFormat } from '@/utils/lazyExports'
+import jsPDF from 'jspdf'
+import autoTable from 'jspdf-autotable'
+import * as XLSX from 'xlsx'
 
 interface ExportOption {
   format: ExportFormat

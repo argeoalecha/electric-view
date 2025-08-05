@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import OptimizedExportButton from '@/components/UI/OptimizedExportButton'
@@ -8,6 +8,9 @@ import OptimizedExportButton from '@/components/UI/OptimizedExportButton'
 jest.mock('@/utils/lazyExports', () => ({
   getExportFunction: jest.fn().mockReturnValue(jest.fn().mockResolvedValue(undefined))
 }))
+
+import { getExportFunction } from '@/utils/lazyExports'
+const mockGetExportFunction = jest.mocked(getExportFunction)
 
 describe('OptimizedExportButton', () => {
   const user = userEvent.setup()
@@ -99,8 +102,7 @@ describe('OptimizedExportButton', () => {
   describe('Export Functionality', () => {
     it('should call export function when PDF option is selected', async () => {
       const mockExportFn = jest.fn().mockResolvedValue(undefined)
-      const { getExportFunction } = require('@/utils/lazyExports')
-      getExportFunction.mockReturnValue(mockExportFn)
+      mockGetExportFunction.mockReturnValue(mockExportFn)
 
       render(<OptimizedExportButton {...mockProps} />)
       
@@ -111,7 +113,7 @@ describe('OptimizedExportButton', () => {
       await user.click(pdfOption)
 
       await waitFor(() => {
-        expect(getExportFunction).toHaveBeenCalledWith('pdf')
+        expect(mockGetExportFunction).toHaveBeenCalledWith('pdf')
         expect(mockExportFn).toHaveBeenCalledWith(
           expect.arrayContaining([
             expect.objectContaining({
@@ -127,8 +129,7 @@ describe('OptimizedExportButton', () => {
 
     it('should handle export errors gracefully', async () => {
       const mockExportFn = jest.fn().mockRejectedValue(new Error('Export failed'))
-      const { getExportFunction } = require('@/utils/lazyExports')
-      getExportFunction.mockReturnValue(mockExportFn)
+      mockGetExportFunction.mockReturnValue(mockExportFn)
 
       // Mock alert
       const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {})
@@ -150,8 +151,7 @@ describe('OptimizedExportButton', () => {
 
     it('should format data correctly for export', async () => {
       const mockExportFn = jest.fn().mockResolvedValue(undefined)
-      const { getExportFunction } = require('@/utils/lazyExports')
-      getExportFunction.mockReturnValue(mockExportFn)
+      mockGetExportFunction.mockReturnValue(mockExportFn)
 
       const propsWithFormatter = {
         ...mockProps,
@@ -193,8 +193,7 @@ describe('OptimizedExportButton', () => {
       })
       
       const mockExportFn = jest.fn().mockReturnValue(exportPromise)
-      const { getExportFunction } = require('@/utils/lazyExports')
-      getExportFunction.mockReturnValue(mockExportFn)
+      mockGetExportFunction.mockReturnValue(mockExportFn)
 
       render(<OptimizedExportButton {...mockProps} />)
       
@@ -224,8 +223,7 @@ describe('OptimizedExportButton', () => {
       })
       
       const mockExportFn = jest.fn().mockReturnValue(exportPromise)
-      const { getExportFunction } = require('@/utils/lazyExports')
-      getExportFunction.mockReturnValue(mockExportFn)
+      mockGetExportFunction.mockReturnValue(mockExportFn)
 
       render(<OptimizedExportButton {...mockProps} />)
       
@@ -283,8 +281,7 @@ describe('OptimizedExportButton', () => {
 
     it('should handle missing column formatters', async () => {
       const mockExportFn = jest.fn().mockResolvedValue(undefined)
-      const { getExportFunction } = require('@/utils/lazyExports')
-      getExportFunction.mockReturnValue(mockExportFn)
+      mockGetExportFunction.mockReturnValue(mockExportFn)
 
       const propsWithoutFormatters = {
         ...mockProps,
@@ -308,8 +305,7 @@ describe('OptimizedExportButton', () => {
   describe('Edge Cases', () => {
     it('should handle data with null values', async () => {
       const mockExportFn = jest.fn().mockResolvedValue(undefined)
-      const { getExportFunction } = require('@/utils/lazyExports')
-      getExportFunction.mockReturnValue(mockExportFn)
+      mockGetExportFunction.mockReturnValue(mockExportFn)
 
       const dataWithNulls = [
         { id: 1, name: null, region: 'Metro Manila' },

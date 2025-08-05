@@ -60,7 +60,7 @@ export default function SignIn() {
       if (data.user) {
         router.push('/dashboard')
       }
-    } catch (err: any) {
+    } catch {
       setError('An unexpected error occurred. Please check your connection.')
     } finally {
       setLoading(false)
@@ -179,7 +179,7 @@ export default function SignIn() {
               <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Don't have an account?</span>
+              <span className="px-2 bg-white text-gray-500">Don&apos;t have an account?</span>
             </div>
           </div>
 

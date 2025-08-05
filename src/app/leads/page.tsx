@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import HorizontalDashboard from '@/components/Layout/HorizontalDashboard'
 
 interface Lead {
@@ -146,7 +145,6 @@ const mockLeads: Lead[] = [
 ]
 
 export default function LeadsPage() {
-  const router = useRouter()
   const [leads] = useState<Lead[]>(mockLeads)
   const [filteredLeads, setFilteredLeads] = useState<Lead[]>(mockLeads)
   const [searchTerm, setSearchTerm] = useState('')
