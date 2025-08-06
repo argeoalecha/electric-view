@@ -3,6 +3,9 @@
 # session files
 *session.md
 
+# local changelog
+CHANGELOG.md
+
 # dependencies
 /node_modules
 /.pnp
