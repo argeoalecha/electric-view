@@ -234,7 +234,7 @@ export default function SignIn() {
               </div>
               <h3 className="text-xl font-semibold text-gray-900">Check your email</h3>
               <p className="text-gray-600">
-                We've sent a password reset link to <strong>{email}</strong>
+                We&apos;ve sent a password reset link to <strong>{email}</strong>
               </p>
               <button
                 onClick={() => {
@@ -296,7 +296,7 @@ export default function SignIn() {
             {forgotPasswordMode && (
               <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                 <p className="text-sm text-blue-700">
-                  Enter your email address and we'll send you a link to reset your password.
+                  Enter your email address and we&apos;ll send you a link to reset your password.
                 </p>
               </div>
             )}
