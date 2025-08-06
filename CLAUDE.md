@@ -258,3 +258,4 @@ src/
 
 ## 📝 Memories
 - Added new memory using Claude's memory tracking system
+- to memorize

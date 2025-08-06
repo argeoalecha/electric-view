@@ -10,10 +10,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Philippine CRM - Leads-Centric Sales Platform",
-  description: "Enterprise-quality CRM designed specifically for Philippine businesses with cultural intelligence and local payment integration.",
+  title: "Electric - Leads-Centric Sales Platform",
+  description: "Enterprise-quality CRM platform with cultural intelligence and local payment integration.",
   keywords: "CRM, Philippines, sales, leads, business, cultural intelligence",
-  authors: [{ name: "Philippine CRM Team" }],
+  authors: [{ name: "Electric Team" }],
   viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
   themeColor: "#0f766e",
   manifest: "/manifest.json",
@@ -30,22 +30,22 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Philippine CRM",
+    title: "Electric",
   },
   formatDetection: {
     telephone: false,
   },
   openGraph: {
     type: "website",
-    siteName: "Philippine CRM",
-    title: "Philippine CRM - Leads-Centric Sales Platform",
-    description: "Enterprise-quality CRM designed specifically for Philippine businesses with cultural intelligence and local payment integration.",
+    siteName: "Electric",
+    title: "Electric - Leads-Centric Sales Platform",
+    description: "Enterprise-quality CRM platform with cultural intelligence and local payment integration.",
     locale: "en_PH",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Philippine CRM - Leads-Centric Sales Platform",
-    description: "Enterprise-quality CRM designed specifically for Philippine businesses with cultural intelligence and local payment integration.",
+    title: "Electric - Leads-Centric Sales Platform",
+    description: "Enterprise-quality CRM platform with cultural intelligence and local payment integration.",
   },
 };
 

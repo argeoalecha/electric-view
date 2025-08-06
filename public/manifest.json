@@ -1,7 +1,7 @@
 {
-  "name": "Philippine CRM - Leads-Centric Sales Platform",
-  "short_name": "Philippine CRM",
-  "description": "Enterprise-quality CRM designed specifically for Philippine businesses with cultural intelligence and local payment integration.",
+  "name": "Electric - Leads-Centric Sales Platform",
+  "short_name": "Electric",
+  "description": "Enterprise-quality CRM platform with cultural intelligence and local payment integration.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -67,21 +67,21 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Philippine CRM Dashboard"
+      "label": "Electric Dashboard"
     },
     {
       "src": "/screenshot-narrow.png",
       "sizes": "375x667",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Philippine CRM Mobile View"
+      "label": "Electric Mobile View"
     }
   ],
   "shortcuts": [
     {
       "name": "Dashboard",
       "short_name": "Dashboard",
-      "description": "View your Philippine CRM dashboard",
+      "description": "View your Electric dashboard",
       "url": "/dashboard",
       "icons": [
         {

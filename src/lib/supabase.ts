@@ -16,7 +16,7 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   },
   global: {
     headers: {
-      'X-Client-Info': 'philippine-crm-v1.0.0'
+      'X-Client-Info': 'electric-v0.1.2'
     }
   }
 })
