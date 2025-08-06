@@ -29,20 +29,50 @@ CREATE TABLE IF NOT EXISTS public.organizations (
 );
 
 -- Enhanced profiles table
-ALTER TABLE public.profiles ADD COLUMN organization_id UUID REFERENCES organizations(id);
-ALTER TABLE public.profiles ADD COLUMN role TEXT DEFAULT 'member' CHECK (role IN ('owner', 'admin', 'manager', 'member'));
-ALTER TABLE public.profiles ADD COLUMN phone TEXT;
-ALTER TABLE public.profiles ADD COLUMN position TEXT;
-ALTER TABLE public.profiles ADD COLUMN department TEXT;
-ALTER TABLE public.profiles ADD COLUMN is_active BOOLEAN DEFAULT TRUE;
-ALTER TABLE public.profiles ADD COLUMN last_login_at TIMESTAMPTZ;
-ALTER TABLE public.profiles ADD COLUMN preferred_language TEXT DEFAULT 'en' CHECK (preferred_language IN ('en', 'tl', 'taglish'));
+DO $$ 
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='organization_id') THEN
+    ALTER TABLE public.profiles ADD COLUMN organization_id UUID REFERENCES organizations(id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='role') THEN
+    ALTER TABLE public.profiles ADD COLUMN role TEXT DEFAULT 'member' CHECK (role IN ('owner', 'admin', 'manager', 'member'));
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='phone') THEN
+    ALTER TABLE public.profiles ADD COLUMN phone TEXT;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='position') THEN
+    ALTER TABLE public.profiles ADD COLUMN position TEXT;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='department') THEN
+    ALTER TABLE public.profiles ADD COLUMN department TEXT;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='is_active') THEN
+    ALTER TABLE public.profiles ADD COLUMN is_active BOOLEAN DEFAULT TRUE;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='last_login_at') THEN
+    ALTER TABLE public.profiles ADD COLUMN last_login_at TIMESTAMPTZ;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='profiles' AND column_name='preferred_language') THEN
+    ALTER TABLE public.profiles ADD COLUMN preferred_language TEXT DEFAULT 'en' CHECK (preferred_language IN ('en', 'tl', 'taglish'));
+  END IF;
+END $$;
 
 -- Add organization_id to existing tables for multi-tenancy
-ALTER TABLE public.companies ADD COLUMN organization_id UUID REFERENCES organizations(id);
-ALTER TABLE public.contacts ADD COLUMN organization_id UUID REFERENCES organizations(id);
-ALTER TABLE public.deals ADD COLUMN organization_id UUID REFERENCES organizations(id);
-ALTER TABLE public.activities ADD COLUMN organization_id UUID REFERENCES organizations(id);
+DO $$ 
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='companies' AND column_name='organization_id') THEN
+    ALTER TABLE public.companies ADD COLUMN organization_id UUID REFERENCES organizations(id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='contacts' AND column_name='organization_id') THEN
+    ALTER TABLE public.contacts ADD COLUMN organization_id UUID REFERENCES organizations(id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='deals' AND column_name='organization_id') THEN
+    ALTER TABLE public.deals ADD COLUMN organization_id UUID REFERENCES organizations(id);
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='activities' AND column_name='organization_id') THEN
+    ALTER TABLE public.activities ADD COLUMN organization_id UUID REFERENCES organizations(id);
+  END IF;
+END $$;
 
 -- Enhanced contacts table for Filipino business culture
 ALTER TABLE public.contacts ADD COLUMN middle_name TEXT;
