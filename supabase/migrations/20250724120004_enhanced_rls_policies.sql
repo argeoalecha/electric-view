@@ -275,3 +275,16 @@ EXCEPTION
     RAISE EXCEPTION 'Database error saving new user: %', SQLERRM;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Create trigger for automatic profile creation on user signup
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
+-- Add INSERT policies for automatic user creation
+CREATE POLICY "Allow profile creation during signup" ON profiles
+  FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Allow organization creation during signup" ON organizations
+  FOR INSERT WITH CHECK (true);
