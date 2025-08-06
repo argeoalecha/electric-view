@@ -13,6 +13,8 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [hasValidConfig, setHasValidConfig] = useState<boolean | null>(null)
+  const [forgotPasswordMode, setForgotPasswordMode] = useState(false)
+  const [resetEmailSent, setResetEmailSent] = useState(false)
 
   useEffect(() => {
     // Check if we have valid Supabase configuration
@@ -129,6 +131,33 @@ export default function SignIn() {
     }
   }
 
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email.trim()) {
+      setError('Please enter your email address first.')
+      return
+    }
+
+    setLoading(true)
+    setError('')
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`
+      })
+
+      if (error) {
+        setError(error.message)
+      } else {
+        setResetEmailSent(true)
+      }
+    } catch {
+      setError('Failed to send reset email. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   // Show loading while checking config
   if (hasValidConfig === null) {
     return (
@@ -147,19 +176,43 @@ export default function SignIn() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-3xl">🇵🇭</span>
+            <span className="text-3xl">⚡</span>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">
-            Philippine CRM
+            Electric
           </h1>
           <p className="text-teal-100">
-            Sign in to your account
+            {forgotPasswordMode ? 'Reset your password' : 'Sign in to your account'}
           </p>
         </div>
 
         {/* Sign In Form */}
         <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-xl p-8">
-          <form onSubmit={handleSignIn} className="space-y-6">
+          {resetEmailSent ? (
+            /* Password Reset Sent */
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Check your email</h3>
+              <p className="text-gray-600">
+                We've sent a password reset link to <strong>{email}</strong>
+              </p>
+              <button
+                onClick={() => {
+                  setResetEmailSent(false)
+                  setForgotPasswordMode(false)
+                  setError('')
+                }}
+                className="text-teal-600 hover:text-teal-500 font-medium transition-colors"
+              >
+                ← Back to sign in
+              </button>
+            </div>
+          ) : (
+            <form onSubmit={forgotPasswordMode ? handleForgotPassword : handleSignIn} className="space-y-6">
             {/* Email Field */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -176,21 +229,41 @@ export default function SignIn() {
               />
             </div>
 
-            {/* Password Field */}
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors"
-                placeholder="Enter your password"
-                required
-              />
-            </div>
+            {/* Password Field - Only show in sign in mode */}
+            {!forgotPasswordMode && (
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                    Password
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => setForgotPasswordMode(true)}
+                    className="text-sm text-teal-600 hover:text-teal-500 transition-colors"
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-colors"
+                  placeholder="Enter your password"
+                  required={!forgotPasswordMode}
+                />
+              </div>
+            )}
+
+            {/* Forgot Password Instructions */}
+            {forgotPasswordMode && (
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-sm text-blue-700">
+                  Enter your email address and we'll send you a link to reset your password.
+                </p>
+              </div>
+            )}
 
             {/* Error Message */}
             {error && (
@@ -199,17 +272,33 @@ export default function SignIn() {
               </div>
             )}
 
-            {/* Sign In Button */}
-            <button
-              type="submit"
-              disabled={loading || !hasValidConfig}
-              className="w-full bg-teal-600 text-white py-3 px-4 rounded-lg hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium mobile-touch-target"
-            >
-              {loading ? 'Signing In...' : 'Sign In'}
-            </button>
+            {/* Submit Button */}
+            <div className="space-y-3">
+              <button
+                type="submit"
+                disabled={loading || !hasValidConfig}
+                className="w-full bg-teal-600 text-white py-3 px-4 rounded-lg hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium mobile-touch-target"
+              >
+                {loading ? (forgotPasswordMode ? 'Sending Reset Link...' : 'Signing In...') : (forgotPasswordMode ? 'Send Reset Link' : 'Sign In')}
+              </button>
 
-            {/* Social Authentication */}
-            {hasValidConfig && (
+              {/* Back to Sign In Button in Forgot Password Mode */}
+              {forgotPasswordMode && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setForgotPasswordMode(false)
+                    setError('')
+                  }}
+                  className="w-full text-gray-600 hover:text-gray-800 py-2 transition-colors font-medium"
+                >
+                  ← Back to sign in
+                </button>
+              )}
+            </div>
+
+            {/* Social Authentication - Only show in sign in mode */}
+            {hasValidConfig && !forgotPasswordMode && (
               <>
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
@@ -271,6 +360,7 @@ export default function SignIn() {
               </div>
             )}
           </form>
+          )}
 
           {/* Divider */}
           <div className="mt-6 relative">
@@ -282,15 +372,17 @@ export default function SignIn() {
             </div>
           </div>
 
-          {/* Sign Up Link */}
-          <div className="mt-6 text-center">
-            <Link
-              href="/auth/signup"
-              className="text-teal-600 hover:text-teal-500 font-medium transition-colors"
-            >
-              Create your Philippine CRM account
-            </Link>
-          </div>
+          {/* Sign Up Link - Only show in sign in mode */}
+          {!forgotPasswordMode && !resetEmailSent && (
+            <div className="mt-6 text-center">
+              <Link
+                href="/auth/signup"
+                className="text-teal-600 hover:text-teal-500 font-medium transition-colors"
+              >
+                Create your Electric account
+              </Link>
+            </div>
+          )}
 
           {/* Demo Mode Option */}
           <div className="mt-4 text-center">
@@ -305,7 +397,7 @@ export default function SignIn() {
 
         {/* Footer */}
         <div className="mt-8 text-center text-sm text-teal-100">
-          <p>Built for Philippine businesses with cultural intelligence</p>
+          <p>CRM platform with cultural intelligence and local payment integration</p>
         </div>
       </div>
     </div>
