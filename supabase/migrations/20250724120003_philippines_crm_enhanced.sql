@@ -2,7 +2,7 @@
 -- Enhanced CRM schema for Philippine market needs
 
 -- Organizations table for multi-tenant SaaS
-CREATE TABLE public.organizations (
+CREATE TABLE IF NOT EXISTS public.organizations (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   name TEXT NOT NULL,
   slug TEXT UNIQUE NOT NULL,
@@ -90,7 +90,7 @@ ALTER TABLE public.deals ADD COLUMN relationship_strength TEXT DEFAULT 'new'
   CHECK (relationship_strength IN ('new', 'developing', 'strong', 'champion'));
 
 -- Tasks table for follow-up culture
-CREATE TABLE public.tasks (
+CREATE TABLE IF NOT EXISTS public.tasks (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   organization_id UUID REFERENCES organizations(id) NOT NULL,
   assigned_to UUID REFERENCES profiles(id),
@@ -110,7 +110,7 @@ CREATE TABLE public.tasks (
 );
 
 -- Payment subscriptions table
-CREATE TABLE public.subscriptions (
+CREATE TABLE IF NOT EXISTS public.subscriptions (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   organization_id UUID REFERENCES organizations(id) NOT NULL,
   -- Payment provider details
@@ -139,7 +139,7 @@ CREATE TABLE public.subscriptions (
 );
 
 -- Payment transactions table for audit trail
-CREATE TABLE public.payment_transactions (
+CREATE TABLE IF NOT EXISTS public.payment_transactions (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   organization_id UUID REFERENCES organizations(id) NOT NULL,
   subscription_id UUID REFERENCES subscriptions(id),
@@ -174,7 +174,7 @@ ALTER TABLE public.activities ADD COLUMN location TEXT;
 ALTER TABLE public.activities ADD COLUMN meeting_attendees TEXT[];
 
 -- Data privacy compliance table
-CREATE TABLE public.data_processing_logs (
+CREATE TABLE IF NOT EXISTS public.data_processing_logs (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   organization_id UUID REFERENCES organizations(id) NOT NULL,
   user_id UUID REFERENCES profiles(id),
