@@ -219,6 +219,8 @@ DECLARE
   org_id UUID;
   org_slug TEXT;
 BEGIN
+  -- Add error handling and logging
+  RAISE LOG 'Creating new user profile for %', NEW.email;
   -- Create organization slug from email domain or use UUID
   org_slug := COALESCE(
     LOWER(REGEXP_REPLACE(split_part(NEW.email, '@', 2), '[^a-zA-Z0-9]', '-', 'g')),
@@ -251,15 +253,25 @@ BEGIN
     email, 
     full_name,
     organization_id,
-    role
+    role,
+    is_active,
+    created_at,
+    updated_at
   ) VALUES (
     NEW.id, 
     NEW.email, 
-    NEW.raw_user_meta_data->>'full_name',
+    COALESCE(NEW.raw_user_meta_data->>'full_name', ''),
     org_id,
-    'owner' -- First user is owner
+    'owner', -- First user is owner
+    TRUE,
+    NOW(),
+    NOW()
   );
   
   RETURN NEW;
+EXCEPTION
+  WHEN OTHERS THEN
+    RAISE LOG 'Error creating user profile: %', SQLERRM;
+    RAISE EXCEPTION 'Database error saving new user: %', SQLERRM;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
