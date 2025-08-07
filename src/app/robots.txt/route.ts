@@ -5,7 +5,7 @@ export async function GET() {
 Allow: /
 
 # Sitemap
-Sitemap: https://lecha.co/sitemap.xml
+Sitemap: https://www.lecha.co/sitemap.xml
 
 # Block specific paths
 Disallow: /auth/callback
@@ -24,7 +24,7 @@ Allow: /demo
 Crawl-delay: 1
 
 # Host directive (helps search engines)
-Host: https://lecha.co`
+Host: https://www.lecha.co`
 
   return new NextResponse(robotsContent, {
     headers: {

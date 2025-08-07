@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   keywords: "CRM Philippines, sales platform, business management, lead tracking, Philippine CRM, cultural intelligence",
   authors: [{ name: "Electric Team" }],
   manifest: "/manifest.json",
-  metadataBase: new URL("https://lecha.co"),
+  metadataBase: new URL("https://www.lecha.co"),
   alternates: {
-    canonical: "https://lecha.co",
+    canonical: "https://www.lecha.co",
   },
   icons: {
     icon: [
@@ -43,10 +43,10 @@ export const metadata: Metadata = {
     title: "Electric - Philippine Business CRM Platform",
     description: "Enterprise-quality CRM platform designed for Philippine businesses with cultural intelligence and local payment integration.",
     locale: "en_PH",
-    url: "https://lecha.co",
+    url: "https://www.lecha.co",
     images: [
       {
-        url: "https://lecha.co/og-image.png",
+        url: "https://www.lecha.co/og-image.png",
         width: 1200,
         height: 630,
         alt: "Electric - Philippine Business CRM Platform",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Electric - Philippine Business CRM Platform",
     description: "Enterprise-quality CRM platform designed for Philippine businesses with cultural intelligence and local payment integration.",
-    images: ["https://lecha.co/og-image.png"],
+    images: ["https://www.lecha.co/og-image.png"],
     site: "@lecha_co",
   },
   robots: {
