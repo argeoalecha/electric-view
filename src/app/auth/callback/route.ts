@@ -21,11 +21,47 @@ export async function GET(request: NextRequest) {
         const { data: user } = await supabase.auth.getUser()
         
         if (user?.user) {
-          const { data: profile } = await supabase
+          let { data: profile } = await supabase
             .from('profiles')
             .select('organization_id')
             .eq('id', user.user.id)
             .single()
+          
+          // If profile doesn't exist, create it manually
+          if (!profile) {
+            try {
+              // Create organization first
+              const { data: org } = await supabase
+                .from('organizations')
+                .insert({
+                  name: user.user.email?.split('@')[1] || 'My Company',
+                  slug: (user.user.email?.split('@')[1] || 'company').toLowerCase().replace(/[^a-z0-9]/g, '-') + '-' + user.user.id.substring(0, 8),
+                  billing_email: user.user.email,
+                  subscription_tier: 'free',
+                  trial_ends_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString()
+                })
+                .select()
+                .single()
+
+              if (org) {
+                // Create profile
+                await supabase
+                  .from('profiles')
+                  .insert({
+                    id: user.user.id,
+                    email: user.user.email,
+                    full_name: user.user.user_metadata?.full_name || user.user.email?.split('@')[0] || '',
+                    organization_id: org.id,
+                    role: 'owner',
+                    is_active: true
+                  })
+
+                profile = { organization_id: org.id }
+              }
+            } catch (createError) {
+              console.error('Error creating profile:', createError)
+            }
+          }
           
           // Redirect based on whether user has completed organization setup
           if (profile?.organization_id) {
