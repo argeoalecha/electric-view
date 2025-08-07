@@ -113,10 +113,10 @@ export default function AuthSetup() {
                   <span className="text-sm text-green-800">Successfully connected to Supabase!</span>
                 </div>
                 <button
-                  onClick={() => window.location.href = '/auth/signin'}
+                  onClick={() => window.location.href = '/dashboard'}
                   className="mt-2 text-sm text-green-700 hover:text-green-900 underline"
                 >
-                  Continue to Sign In →
+                  Continue to Dashboard →
                 </button>
               </div>
             )}

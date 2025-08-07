@@ -73,18 +73,6 @@ export default function Home() {
                   >
                     🚀 Try Demo Dashboard
                   </a>
-                  <a
-                    href="/auth/signin"
-                    className="block w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors text-center"
-                  >
-                    Sign In
-                  </a>
-                  <a
-                    href="/auth/signup"
-                    className="block w-full border border-blue-600 text-blue-600 py-2 px-4 rounded-md hover:bg-blue-50 transition-colors text-center"
-                  >
-                    Create Account
-                  </a>
                 </>
               ) : (
                 <>

@@ -16,8 +16,6 @@ Disallow: /admin/
 
 # Allow important pages for SEO
 Allow: /
-Allow: /auth/signin
-Allow: /auth/signup
 Allow: /demo
 
 # Crawl delay (optional - be respectful)

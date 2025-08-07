@@ -13,18 +13,6 @@ export async function GET() {
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>${baseUrl}/auth/signin</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>${baseUrl}/auth/signup</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>${baseUrl}/dashboard</loc>
     <lastmod>${currentDate}</lastmod>
     <changefreq>daily</changefreq>
