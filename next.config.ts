@@ -161,18 +161,6 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
-      // Redirect www to non-www
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'www.lecha.co',
-          },
-        ],
-        destination: 'https://lecha.co/:path*',
-        permanent: true,
-      },
     ];
   },
 
