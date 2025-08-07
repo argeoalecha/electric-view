@@ -76,6 +76,6 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // If something went wrong, redirect to home with error
-  return NextResponse.redirect(`${origin}/?error=auth_callback_error`)
+  // If something went wrong, redirect to auth page with error
+  return NextResponse.redirect(`${origin}/auth?error=auth_callback_error`)
 }

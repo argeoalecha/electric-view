@@ -55,7 +55,7 @@ function ResetPasswordForm() {
         setSuccess(true)
         // Auto-redirect after success
         setTimeout(() => {
-          router.push('/')
+          router.push('/auth')
         }, 3000)
       }
     } catch {
@@ -102,7 +102,7 @@ function ResetPasswordForm() {
               This password reset link is invalid or has expired. Please request a new one.
             </p>
             <Link
-              href="/"
+              href="/auth"
               className="inline-block bg-teal-600 text-white py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors font-medium"
             >
               Back to Sign In
@@ -142,7 +142,7 @@ function ResetPasswordForm() {
               </p>
               <div className="mt-6">
                 <Link
-                  href="/"
+                  href="/auth"
                   className="text-teal-600 hover:text-teal-500 font-medium transition-colors"
                 >
                   Continue to Sign In →
@@ -208,7 +208,7 @@ function ResetPasswordForm() {
               {/* Cancel Link */}
               <div className="text-center">
                 <Link
-                  href="/"
+                  href="/auth"
                   className="text-gray-600 hover:text-gray-800 transition-colors text-sm"
                 >
                   Cancel and return to sign in

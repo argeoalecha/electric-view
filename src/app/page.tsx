@@ -73,6 +73,12 @@ export default function Home() {
                   >
                     🚀 Try Demo Dashboard
                   </a>
+                  <a
+                    href="/auth"
+                    className="block w-full bg-teal-600 text-white py-2 px-4 rounded-md hover:bg-teal-700 transition-colors text-center font-medium"
+                  >
+                    Sign In / Sign Up
+                  </a>
                 </>
               ) : (
                 <>

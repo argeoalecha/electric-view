@@ -84,7 +84,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!isDemoMode && !loading && !user) {
-      router.push('/')
+      router.push('/auth')
     }
   }, [user, loading, router, isDemoMode])
 
