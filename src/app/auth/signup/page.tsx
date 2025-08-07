@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { createSupabaseFlexibleClient } from '@/lib/supabase-flexible'
 
-export default function AuthPage() {
+export default function SignUpPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [fullName, setFullName] = useState('')
+  const [companyName, setCompanyName] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -25,22 +27,34 @@ export default function AuthPage() {
     checkAuth()
   }, [router])
 
-  const handleSignIn = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError('')
     setSuccess('')
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            full_name: fullName,
+            company_name: companyName,
+          }
+        }
       })
 
       if (error) {
         setError(error.message)
       } else if (data.user) {
-        router.push('/dashboard')
+        if (data.user.email_confirmed_at) {
+          // Email already confirmed, redirect
+          router.push('/dashboard')
+        } else {
+          // Need email confirmation
+          setSuccess('Please check your email and click the confirmation link to complete your registration.')
+        }
       }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.')
@@ -102,8 +116,8 @@ export default function AuthPage() {
 
           {/* Header */}
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Sign In</h2>
-            <p className="text-gray-600">Enter your credentials to access your account</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
+            <p className="text-gray-600">Get started with your Electric CRM account</p>
           </div>
 
           {/* Error Message */}
@@ -138,9 +152,40 @@ export default function AuthPage() {
             </div>
           )}
 
-          {/* Sign In Form */}
+          {/* Sign Up Form */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-            <form className="space-y-6" onSubmit={handleSignIn}>
+            <form className="space-y-6" onSubmit={handleSignUp}>
+              {/* Full Name Field */}
+              <div>
+                <label htmlFor="fullName" className="block text-sm font-semibold text-gray-900 mb-2">
+                  Full Name
+                </label>
+                <input
+                  id="fullName"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 placeholder-gray-500"
+                  placeholder="Enter your full name"
+                  required
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+              </div>
+
+              {/* Company Name Field */}
+              <div>
+                <label htmlFor="companyName" className="block text-sm font-semibold text-gray-900 mb-2">
+                  Company Name
+                </label>
+                <input
+                  id="companyName"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 placeholder-gray-500"
+                  placeholder="Enter your company name"
+                  type="text"
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                />
+              </div>
+
               {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold text-gray-900 mb-2">
@@ -159,21 +204,13 @@ export default function AuthPage() {
 
               {/* Password Field */}
               <div>
-                <div className="flex items-center justify-between mb-2">
-                  <label htmlFor="password" className="block text-sm font-semibold text-gray-900">
-                    Password
-                  </label>
-                  <a 
-                    href="/auth/reset-password"
-                    className="text-sm text-blue-600 hover:text-blue-500 transition-colors font-medium"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
+                <label htmlFor="password" className="block text-sm font-semibold text-gray-900 mb-2">
+                  Password
+                </label>
                 <input
                   id="password"
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors text-gray-900 placeholder-gray-500"
-                  placeholder="Enter your password"
+                  placeholder="Create a password"
                   required
                   type="password"
                   value={password}
@@ -181,14 +218,14 @@ export default function AuthPage() {
                 />
               </div>
 
-              {/* Sign In Button */}
+              {/* Sign Up Button */}
               <div className="space-y-3">
                 <button
                   type="submit"
                   disabled={loading}
                   className="w-full bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-semibold text-sm"
                 >
-                  {loading ? 'Signing In...' : 'Sign In'}
+                  {loading ? 'Creating Account...' : 'Create Account'}
                 </button>
               </div>
 
@@ -233,23 +270,23 @@ export default function AuthPage() {
               </div>
             </form>
 
-            {/* Sign Up Section */}
+            {/* Sign In Section */}
             <div className="mt-8 space-y-4">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-200"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500">New to Electric?</span>
+                  <span className="px-4 bg-white text-gray-500">Already have an account?</span>
                 </div>
               </div>
 
               <div className="text-center space-y-3">
                 <a
                   className="inline-block w-full py-3 px-4 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-                  href="/auth/signup"
+                  href="/auth"
                 >
-                  Create an account
+                  Sign in to your account
                 </a>
                 <a
                   href="/demo"
