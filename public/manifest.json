@@ -1,13 +1,13 @@
 {
-  "name": "Electric - Leads-Centric Sales Platform",
+  "name": "Electric - Philippine Business CRM Platform",
   "short_name": "Electric",
-  "description": "Enterprise-quality CRM platform with cultural intelligence and local payment integration.",
-  "start_url": "/",
+  "description": "Enterprise-quality CRM platform designed for Philippine businesses with cultural intelligence and local payment integration.",
+  "start_url": "https://lecha.co/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0f766e",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "https://lecha.co/",
   "categories": ["business", "productivity", "finance"],
   "lang": "en-PH",
   "dir": "ltr",
@@ -130,7 +130,7 @@
   "related_applications": [],
   "prefer_related_applications": false,
   "share_target": {
-    "action": "/share",
+    "action": "https://lecha.co/share",
     "method": "POST",
     "enctype": "multipart/form-data",
     "params": {
@@ -147,13 +147,13 @@
   },
   "protocol_handlers": [
     {
-      "protocol": "web+philippinecrm",
-      "url": "/handle?protocol=%s"
+      "protocol": "web+lechacrm",
+      "url": "https://lecha.co/handle?protocol=%s"
     }
   ],
   "file_handlers": [
     {
-      "action": "/import",
+      "action": "https://lecha.co/import",
       "accept": {
         "text/csv": [".csv"],
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"]

@@ -29,6 +29,21 @@ const nextConfig: NextConfig = {
     formats: ['image/webp', 'image/avif'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    domains: ['lecha.co', 'www.lecha.co'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lecha.co',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 
   // Bundle analyzer in development
@@ -114,6 +129,11 @@ const nextConfig: NextConfig = {
             key: 'Referrer-Policy',
             value: 'origin-when-cross-origin',
           },
+          // Content Security Policy
+          {
+            key: 'Content-Security-Policy',
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://lecha.co; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://lecha.co;",
+          },
           // Performance headers
           {
             key: 'X-DNS-Prefetch-Control',
@@ -141,7 +161,37 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      // Redirect www to non-www
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.lecha.co',
+          },
+        ],
+        destination: 'https://lecha.co/:path*',
+        permanent: true,
+      },
     ];
+  },
+
+  // Domain configuration
+  async rewrites() {
+    return {
+      beforeFiles: [],
+      afterFiles: [
+        {
+          source: '/sitemap.xml',
+          destination: '/api/sitemap',
+        },
+        {
+          source: '/robots.txt',
+          destination: '/api/robots',
+        },
+      ],
+      fallback: [],
+    };
   },
 
   // Compress responses

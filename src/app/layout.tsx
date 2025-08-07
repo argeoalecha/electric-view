@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SupabaseProvider } from "@/providers/supabase-provider";
@@ -10,13 +10,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Electric - Leads-Centric Sales Platform",
-  description: "Enterprise-quality CRM platform with cultural intelligence and local payment integration.",
-  keywords: "CRM, Philippines, sales, leads, business, cultural intelligence",
+  title: "Electric - Philippine Business CRM Platform",
+  description: "Enterprise-quality CRM platform designed for Philippine businesses with cultural intelligence and local payment integration.",
+  keywords: "CRM Philippines, sales platform, business management, lead tracking, Philippine CRM, cultural intelligence",
   authors: [{ name: "Electric Team" }],
-  viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
-  themeColor: "#0f766e",
   manifest: "/manifest.json",
+  metadataBase: new URL("https://lecha.co"),
+  alternates: {
+    canonical: "https://lecha.co",
+  },
   icons: {
     icon: [
       { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
@@ -38,15 +40,44 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "Electric",
-    title: "Electric - Leads-Centric Sales Platform",
-    description: "Enterprise-quality CRM platform with cultural intelligence and local payment integration.",
+    title: "Electric - Philippine Business CRM Platform",
+    description: "Enterprise-quality CRM platform designed for Philippine businesses with cultural intelligence and local payment integration.",
     locale: "en_PH",
+    url: "https://lecha.co",
+    images: [
+      {
+        url: "https://lecha.co/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Electric - Philippine Business CRM Platform",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Electric - Leads-Centric Sales Platform",
-    description: "Enterprise-quality CRM platform with cultural intelligence and local payment integration.",
+    title: "Electric - Philippine Business CRM Platform",
+    description: "Enterprise-quality CRM platform designed for Philippine businesses with cultural intelligence and local payment integration.",
+    images: ["https://lecha.co/og-image.png"],
+    site: "@lecha_co",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0f766e",
 };
 
 export default function RootLayout({
